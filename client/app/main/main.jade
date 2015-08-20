@@ -2,32 +2,44 @@ div(ng-include='"components/navbar/navbar.html"')
 
 header#banner.hero-unit
   .container
-    h1 'Allo, 'Allo!
-    p.lead Kick-start your next web app with Angular Fullstack
-    img(src='assets/images/yeoman.png', alt='I\'m Yeoman')
+    h4 Have a great TV show idea that needs to be made? Pitch it!
+    .row
+      .col-sm-4
+      .col-sm-4
+        form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+          input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', placeholder='the title')
+          textarea.form-control(rows='4', name='description', ng-model='pitch.description', ng-maxlength='256', placeholder='the pitch (256 characters)')
+          // TODO: split genres into elements using directive
+          input.form-control(type='text', name='genres', ng-model='pitch.genres', placeholder='genres i.e. comedy, action, zombie, etc')
+          input.form-control(type='text', name='youtubelink', ng-model='pitch.youtubelink' placeholder='youtube link... talk about your idea')
+          br    
+          button.btn.btn-inverse.btn-lg.btn-login(type='submit')
+            | Pitch it!
 
 .container
+  .row.page-header
+    .col-sm-6
+      h3 Pitches
+    .col-sm-6.text-right
+      h3 latest | greatest
   .row
-    .col-lg-12
-      h1.page-header Features:
-      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in awesomeThings')
-        li
-          a(href='#', tooltip='{{thing.info}}')
-            | {{thing.name}}
-            button.close(type='button', ng-click='deleteThing(thing)') ×
-
-  form.thing-form
-    label Syncs in realtime across clients
-    p.input-group
-      input.form-control(type='text', placeholder='Add a new thing here.', ng-model='newThing')
-      span.input-group-btn
-        button.btn.btn-primary(type='submit', ng-click='addThing()') Add New
-
-footer.footer
-  .container
-    p
-      | Angular Fullstack v2.1.1
-      = ' | '
-      a(href='https://twitter.com/tyhenkel') @tyhenkel
-      = ' | '
-      a(href='https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open') Issues
+    .col-sm-3
+    .col-sm-6
+      div(ng-repeat='pitch in pitches')
+        h4
+          {{pitch.title}}
+        p  
+          a(href='#', ng-click='make(pitch)')
+            span.glyphicon.glyphicon-fire
+          {{pitch.makes}} want this made
+        p
+          a(href='#', ng-click='retake(pitch)')
+            span.glyphicon.glyphicon-thumbs-down
+          {{pitch.retakes}} want a retake
+        p
+          b {{pitch.genres.join(', ')}}
+        p
+          {{pitch.description}}
+        p
+          iframe(width='560', height='315', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+        hr

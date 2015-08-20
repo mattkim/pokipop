@@ -1,27 +1,47 @@
 'use strict';
 
 angular.module('seedlyApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, $http, socket, Pitch) {
+    $scope.pitches = [];
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
+    $http.get('/api/pitches').success(function(pitches) {
+      $scope.pitches = pitches;
+      // Oh cool this is how it works where updates are immediate
+      socket.syncUpdates('pitch', $scope.pitches);
     });
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
+    $scope.pitchit = function(form) {
+      $scope.submitted = true;
+
+      if(form.$valid) {
+        console.log($scope.pitch);
+
+        //TODO: validate that the genres list format is good and then split it.
+
+        Pitch.save({
+          title: $scope.pitch.title,
+          description: $scope.pitch.description,
+          genres: $scope.pitch.genres,
+          youtubelink: $scope.pitch.youtubelink,
+          makes: 0,
+          retakes: 0
+        }, function(data) {
+          console.log(data);
+        }, function(err) {
+          console.log(err);
+        });
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.make = function(pitch) {
+      console.log('make');
+      console.log(pitch);
+      pitch.makes = pitch.makes + 1;
     };
 
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
+    $scope.retake = function(pitch) {
+      console.log('retake');
+      console.log(pitch);
+      pitch.retakes = pitch.retakes + 1;
+    };
   });
