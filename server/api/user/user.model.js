@@ -4,16 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
-var customerTypes = ['seller', 'buyer', 'admin'];
-
-var AddressSchema = new Schema({
-    fullName : String,
-    addressLine1 : String,
-    addressLine2 : String,
-    city : String,
-    state : String,
-    zipCode : String
-});
 
 // TODO: add input fields for these extra types.
 var UserSchema = new Schema({
@@ -30,19 +20,10 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  customerType: {
-    type: String,
-    enum: customerTypes,
-    required: true
-  },
-  phoneNumber: String,
-  faxNumber: String,
   hashedPassword: {
     type: String,
     require: true
   },
-  addresses: [AddressSchema],
-  // TODO: build a profile picture upload tool
   profilePictureURL: String,
   provider: String,
   salt: String,

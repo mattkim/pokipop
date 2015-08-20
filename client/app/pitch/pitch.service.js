@@ -5,5 +5,9 @@ angular.module('seedlyApp')
   .factory('Pitch', function($resource){
   	return $resource ('/api/pitches/:id/:controller/:id2',{
       id: '@_id'
+    },{
+    	update: {
+    		method: 'PUT'
+    	}
     });
   });

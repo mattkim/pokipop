@@ -37,11 +37,13 @@ angular.module('seedlyApp')
       console.log('make');
       console.log(pitch);
       pitch.makes = pitch.makes + 1;
+      Pitch.update({id:pitch._id}, pitch);
     };
 
     $scope.retake = function(pitch) {
       console.log('retake');
       console.log(pitch);
       pitch.retakes = pitch.retakes + 1;
+      Pitch.update({id:pitch._id}, pitch);
     };
   });

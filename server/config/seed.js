@@ -34,31 +34,9 @@ Thing.find({}).remove(function() {
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    name: 'Test User',
+    name: 'Test',
     email: 'test@test.com',
-    password: 'test',
-    customerType: 'admin'
-  }, {
-    provider: 'local',
-    role: 'admin',
-    name: 'Admin',
-    email: 'admin@admin.com',
-    password: 'admin',
-    customerType: 'admin'
-  }, {
-    provider: 'local',
-    role: 'user',
-    name: 'Buyer',
-    email: 'buyer@buyer.com',
-    password: 'buyer',
-    customerType: 'buyer'
-  }, {
-    provider: 'local',
-    role: 'user',
-    name: 'Seller',
-    email: 'seller@seller.com',
-    password: 'seller',
-    customerType: 'seller'
+    password: 'test'
   }, function() {
       console.log('finished populating users');
     }
