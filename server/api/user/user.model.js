@@ -13,17 +13,13 @@ var UserSchema = new Schema({
   },
   email: { 
     type: String,
-    lowercase: true,
-    required: true
+    lowercase: true
   },
   role: {
     type: String,
     default: 'user'
   },
-  hashedPassword: {
-    type: String,
-    require: true
-  },
+  hashedPassword: String,
   profilePictureURL: String,
   provider: String,
   salt: String,

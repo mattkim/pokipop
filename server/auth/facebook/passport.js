@@ -12,13 +12,24 @@ exports.setup = function (User, config) {
         'facebook.id': profile.id
       },
       function(err, user) {
+        console.log('facebook passport');
+        console.log(accessToken);
+        console.log(refreshToken);
+        console.log(profile);
+        console.log(done);
+        console.log(err);
+        console.log(user);
+
         if (err) {
           return done(err);
         }
+
+        // This means that if the user already exists don't recreate it.
         if (!user) {
           user = new User({
-            name: profile.displayName,
-            email: profile.emails[0].value,
+            name: profile.displayName, // TODO: add an email
+            //email: profile.emails[0].value, // Sometimes email doesn't exist interesting.
+            // TODO: create separate fb accounts for prod and test
             role: 'user',
             username: profile.username,
             provider: 'facebook',
