@@ -19,6 +19,11 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
+  status: {
+    type: String,
+    default: 'inactive'
+  },
+  activetoken: String,
   hashedPassword: String,
   profilePictureURL: String,
   provider: String,

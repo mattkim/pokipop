@@ -4,9 +4,44 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var email = require('../email/email.controller');
+var uuid = require('node-uuid');
 
 var validationError = function(res, err) {
   return res.status(422).json(err);
+};
+
+exports.verify = function(req, res) {
+  console.log('verifying');
+  var email = req.query.email;
+  var token = req.query.token;
+  console.log(email);
+  console.log(token);
+
+  User.findOne({email: email}, function(err, user) {
+    console.log(user);
+    // do stuff
+    if(err) {
+      console.log('error');
+      return res.status(500).send(err);
+    }
+    if(user.activetoken !== token) {
+      console.log('active token does not match');
+      return res.status(500).send('active token does not match');
+    }
+
+    // if tokens match then flip to active
+    user.status = 'active';
+    user.activetoken = null;
+    user.save(function(err) {
+      if (err) return validationError(res, err);
+      //res.status(200).send('OK');
+      res.redirect('/');
+    });
+  });
+
+  // verify if the token is legit, for this user.
+  // if it is, then flip status to active
 };
 
 /**
@@ -29,8 +64,12 @@ exports.create = function (req, res, next) {
   console.log(newUser);
   newUser.provider = 'local';
   newUser.role = 'user';
+  newUser.activetoken = uuid.v4();
+  // TODO: what happens to user when its facebook.
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
+    // Send a conf email to users.
+    email.sendmail(newUser.email, newUser.activetoken);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     res.json({ token: token });
   });

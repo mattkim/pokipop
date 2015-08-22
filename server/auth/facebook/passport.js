@@ -33,6 +33,7 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'facebook',
+            status: 'active',
             facebook: profile._json
           });
           user.save(function(err) {
