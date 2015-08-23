@@ -4,13 +4,34 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
-var email = require('../email/email.controller');
+var emails = require('../email/email.controller');
 var uuid = require('node-uuid');
 
 var validationError = function(res, err) {
   return res.status(422).json(err);
 };
 
+// TODO maybe this goes in another module
+exports.forgotpw = function(req, res) {
+  console.log('forgotpw');
+  var email = req.query.email;
+  console.log(email);
+
+  User.findOne({email: email}, function(err, user) {
+    console.log(user);
+    var token = uuid.v4();
+    user.forgotPasswordToken = token;
+
+    user.save(function(err) {
+      if (err) return validationError(res, err);
+      // TODO: upon success display a email is sent message.
+      emails.sendForgotPasswordMail(email, token); // Technically need to wait on the callback here.
+      res.status(200).send('OK');
+    });
+  });
+};
+
+// TODO put into verify service
 exports.verify = function(req, res) {
   console.log('verifying');
   var email = req.query.email;
@@ -39,9 +60,6 @@ exports.verify = function(req, res) {
       res.redirect('/');
     });
   });
-
-  // verify if the token is legit, for this user.
-  // if it is, then flip status to active
 };
 
 /**
@@ -69,7 +87,7 @@ exports.create = function (req, res, next) {
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
     // Send a conf email to users.
-    email.sendmail(newUser.email, newUser.activetoken);
+    emails.sendmail(newUser.email, newUser.activetoken);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     res.json({ token: token });
   });
@@ -106,9 +124,37 @@ exports.changePassword = function(req, res, next) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
+  //var forgot = Boolean(req.body.forgot); // TODO: double check this works.
 
   User.findById(userId, function (err, user) {
+    // If they forgot their password just update the new password.
     if(user.authenticate(oldPass)) {
+      user.password = newPass;
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.status(200).send('OK');
+      });
+    } else {
+      res.status(403).send('Forbidden');
+    }
+  });
+};
+
+exports.changePasswordWithToken = function(req, res, next) {
+  var email = String(req.body.email);
+  var token = String(req.body.token);
+  var newPass = String(req.body.newPassword);
+  console.log('changePasswordWithToken');
+  //var forgot = Boolean(req.body.forgot); // TODO: double check this works.
+  console.log(email);
+  console.log(token);
+  console.log(newPass);
+
+  User.findOne({email: email}, function (err, user) {
+    console.log(user);
+    // If they forgot their password just update the new password.
+    if(user.forgotPasswordToken === token) {
+      user.forgotPasswordToken = null;
       user.password = newPass;
       user.save(function(err) {
         if (err) return validationError(res, err);

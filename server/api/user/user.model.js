@@ -24,6 +24,7 @@ var UserSchema = new Schema({
     default: 'inactive'
   },
   activetoken: String,
+  forgotPasswordToken: String,
   hashedPassword: String,
   profilePictureURL: String,
   provider: String,

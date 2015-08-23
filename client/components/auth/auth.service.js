@@ -92,6 +92,20 @@ angular.module('seedlyApp')
         }).$promise;
       },
 
+      forgotPassword: function(email, token, newPassword, callback) {
+        var cb = callback || angular.noop;
+
+        return User.changePasswordWithToken({ id: null }, {
+          email: email,
+          token: token,
+          newPassword: newPassword
+        }, function(user) {
+          return cb(user);
+        }, function(err) {
+          return cb(err);
+        }).$promise;
+      },
+
       /**
        * Gets all available info on authenticated user
        *

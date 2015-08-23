@@ -6,10 +6,22 @@ angular.module('seedlyApp')
       id: '@_id'
     },
     {
+      forgotPassword: {
+        method: 'GET',
+        params: {
+          controller:'forgotpw'
+        }
+      },
       changePassword: {
         method: 'PUT',
         params: {
           controller:'password'
+        }
+      },
+      changePasswordWithToken: {
+        method: 'PUT',
+        params: {
+          controller:'passwordwithtoken'
         }
       },
       get: {

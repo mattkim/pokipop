@@ -2,9 +2,6 @@ div(ng-include='"components/navbar/navbar.html"')
 .container
   .row
     .col-sm-12
-      h1 Login
-
-    .col-sm-12
       form.form(name='form', ng-submit='login(form)', novalidate='')
         .form-group
           label Email
@@ -32,4 +29,10 @@ div(ng-include='"components/navbar/navbar.html"')
           a.btn.btn-twitter(href='', ng-click='loginOauth("twitter")')
             i.fa.fa-twitter
             |  Connect with Twitter
+
   hr
+  .row
+    .col-sm-12
+      p
+        a(href='/forgotpassword')
+          | forgot password?
