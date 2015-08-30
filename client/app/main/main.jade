@@ -1,45 +1,79 @@
-div(ng-include='"components/navbar/navbar.html"')
+div.mainup
+  div(ng-include='"components/navbar/navbarfront.html"')
 
-header#banner.hero-unit
-  .container
-    h4 Have a great TV show idea that needs to be made? Pitch it!
-    .row
-      .col-sm-4
-      .col-sm-4
-        form.form(name='form', ng-submit='pitchit(form)', novalidate='')
-          input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', placeholder='the title')
-          textarea.form-control(rows='4', name='description', ng-model='pitch.description', ng-maxlength='256', placeholder='the pitch (256 characters)')
-          // TODO: split genres into elements using directive
-          input.form-control(type='text', name='genres', ng-model='pitch.genres', placeholder='genres i.e. comedy, action, zombie, etc')
-          input.form-control(type='text', name='youtubelink', ng-model='pitch.youtubelink' placeholder='youtube link... talk about your idea')
-          br    
-          button.btn.btn-inverse.btn-lg.btn-login(type='submit')
-            | Pitch it!
+  header#banner.hero-unit
+    .container
+      h4 Have an original TV show idea that needs to be made? Pitch it!
+      .row
+        .col-sm-4
+        .col-sm-4
+          form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+            .form-group
+              input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', placeholder='the title')
+            .form-group
+              textarea.form-control(rows='4', name='description', ng-model='pitch.description', ng-maxlength='256', placeholder='the pitch (256 characters)')
+              // TODO: split genres into elements using directive
+            //.form-group  
+            //  input.form-control(type='text', name='genres', ng-model='pitch.genres', placeholder='genres i.e. comedy, action, zombie, etc')
+            //.form-group
+            //  input.form-control(type='text', name='youtubelink', ng-model='pitch.youtubelink' placeholder='youtube link... talk about your idea')
+                
+            button.btn.btn-default.btn-small(type='submit')
+              | Pitch it!
 
 .container
   .row.page-header
-    .col-sm-6
-      h3 Pitches
-    .col-sm-6.text-right
-      h3 latest | greatest
+    //.col-sm-6
+    //  h3 Pitches
+    //.col-sm-6.text-right
+    //.col-sm-12
+    //  h3.center latest | greatest pitches
   .row
     .col-sm-3
     .col-sm-6
       div(ng-repeat='pitch in pitches')
-        h4
-          {{pitch.title}}
-        p  
-          a(href='#', ng-click='make(pitch)')
-            span.glyphicon.glyphicon-fire
-          {{pitch.makes}} want this made
-        p
-          a(href='#', ng-click='retake(pitch)')
-            span.glyphicon.glyphicon-thumbs-down
-          {{pitch.retakes}} want a retake
-        p
-          b {{pitch.genres.join(', ')}}
-        p
-          {{pitch.description}}
-        p
-          iframe(width='560', height='315', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+        .row
+          .col-sm-3
+            img.img-circle.img-sm(src='{{pitch.user.profilePictureURL}}')
+          .col-sm-7
+            h4
+              {{pitch.title}}
+            //p  
+            //  a(href='#', ng-click='make(pitch)')
+            //    span.glyphicon.glyphicon-fire
+            //  {{pitch.makes}} want this made
+            //p
+            //  a(href='#', ng-click='retake(pitch)')
+            //    span.glyphicon.glyphicon-thumbs-down
+            //  {{pitch.retakes}} want a retake
+            p
+              {{pitch.description}}
+
+            //p
+            //  b {{pitch.genres.join(', ')}}
+            //p
+            //  iframe(width='560', height='315', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+          .col-sm-2
+            .row
+              .col-sm-12
+                p  
+                  a.vote(href='#', ng-click='make(pitch)')
+                    span.glyphicon.glyphicon-thumbs-up {{pitch.makes}}
+            .row
+              .col-sm-12
+                p
+                  a.vote(href='#', ng-click='retake(pitch)')
+                    span.glyphicon.glyphicon-thumbs-down {{pitch.retakes}}
         hr
+
+footer.footer
+  .container
+    p
+      //| ognu.tv
+      //= ' | '
+      a(href='/') About
+      = ' | '
+      a(href='/') Contact
+      = ' | '
+      ©2015 ognu.tv, All Rights Reserved
+  

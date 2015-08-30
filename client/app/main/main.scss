@@ -5,6 +5,10 @@
     margin: 20px 0;
 }
 
+.center {
+    text-align: center;
+}
+
 #banner {
     border-bottom: none;
     margin-top: -20px;
@@ -22,7 +26,17 @@
     color: #F5F5F5;
     text-align: center;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
+    //background: #4393B9;
+    //background-image: url(https://s3-us-west-1.amazonaws.com/pokipop/tvproductionstudio.jpg);
+}
+
+.mainup {
+    background-image: url(https://s3-us-west-1.amazonaws.com/pokipop/tvproductionstudio.jpg); 
+    background-size: cover;  
+}
+
+.navbar-default {
+    background: transparent;
 }
 
 .footer {
@@ -34,4 +48,9 @@
 
 .navbar-text {
   margin-left: 15px;
+}
+
+.vote {
+  color: #000000;
+  &:hover { color: #999999; }
 }

@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook'];
 
-// TODO: add input fields for these extra types.
 var UserSchema = new Schema({
   name: {
     type: String,
@@ -14,6 +13,7 @@ var UserSchema = new Schema({
   email: { 
     type: String,
     lowercase: true
+    // TODO: add uniq index here
   },
   role: {
     type: String,

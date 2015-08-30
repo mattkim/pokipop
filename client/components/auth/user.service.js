@@ -6,6 +6,9 @@ angular.module('seedlyApp')
       id: '@_id'
     },
     {
+      update: {
+        method: 'PATCH'
+      },
       forgotPassword: {
         method: 'GET',
         params: {

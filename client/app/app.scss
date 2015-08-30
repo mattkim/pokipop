@@ -8,6 +8,25 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styles
  */
 
+.hero {
+  //background: #4393B9;
+  border: 0px;
+}
+
+.hero > .container > .navbar-header > .navbar-brand {
+  color: #FFFFFF;
+  &:hover { color: #F5F5F5; }
+}
+
+.hero > .container > #navbar-main > ul > li > a {
+  color: #FFFFFF;
+  &:hover { color: #F5F5F5; }
+}
+
+.hero > .container > #navbar-main > ul > li > p {
+  color: #FFFFFF;
+}
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -15,13 +34,30 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     padding: 0.2em 0;
 }
 
+.btn-default,.btn-primary,.btn-success,.btn-info,.btn-warning,.btn-danger,.btn-login {
+    border-radius:23px;
+}
+
+.img-lrg {
+   display:block;
+   margin:auto;
+   width: 200px;
+   height: 200px;
+}
+
+.img-sm {
+   display:block;
+   margin:auto;
+   width: 75px;
+   height: 75px;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.scss';
+@import 'account/settings/settings.scss';
 @import 'admin/admin.scss';
 @import 'changepassword/changepassword.scss';
-@import 'checkout/checkout.scss';
-@import 'createproduct/createproduct.scss';
 @import 'forgotpassword/forgotpassword.scss';
 @import 'main/main.scss';
 @import 'modal/modal.scss';

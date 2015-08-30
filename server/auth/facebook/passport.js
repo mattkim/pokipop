@@ -31,7 +31,7 @@ exports.setup = function (User, config) {
             //email: profile.emails[0].value, // Sometimes email doesn't exist interesting.
             // TODO: create separate fb accounts for prod and test
             role: 'user',
-            username: profile.username,
+            //username: profile.username,
             provider: 'facebook',
             status: 'active',
             facebook: profile._json

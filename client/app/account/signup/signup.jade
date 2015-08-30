@@ -1,7 +1,8 @@
 div(ng-include='"components/navbar/navbar.html"')
 .container
   .row
-    .col-sm-12
+    .col-sm-4
+    .col-sm-4
       form.form(name='form', ng-submit='register(form)', novalidate='')
         .form-group(ng-class='{ "has-success": form.name.$valid && submitted,\
         "has-error": form.name.$invalid && submitted }')
@@ -31,17 +32,16 @@ div(ng-include='"components/navbar/navbar.html"')
             | {{ errors.password }}
 
         div
-          button.btn.btn-inverse.btn-lg.btn-login(type='submit')
+          button.btn.btn-default.btn-small.btn-login(type='submit')
             | Sign up
 
         hr
 
         div
-          a.btn.btn-facebook(href='', ng-click='loginOauth("facebook")')
+          a.btn.btn-default.btn-small.btn-facebook(href='', ng-click='loginOauth("facebook")')
             i.fa.fa-facebook
-            |  Connect with Facebook
+            |  Connect
           = ' '
-          a.btn.btn-twitter(href='', ng-click='loginOauth("twitter")')
+          a.btn.btn-default.btn-small.btn-twitter(href='', ng-click='loginOauth("twitter")')
             i.fa.fa-twitter
-            |  Connect with Twitter
-  hr
+            |  Connect

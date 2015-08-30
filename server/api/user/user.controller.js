@@ -6,6 +6,7 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var emails = require('../email/email.controller');
 var uuid = require('node-uuid');
+var _ = require('lodash');
 
 var validationError = function(res, err) {
   return res.status(422).json(err);
@@ -106,6 +107,22 @@ exports.show = function (req, res, next) {
   });
 };
 
+// Updates an existing product in the DB.
+exports.update = function(req, res) {
+  console.log('user.update');
+  console.log(req.body);
+  if(req.body._id) { delete req.body._id; }
+  User.findById(req.params.id, function (err, user) {
+    //if (err) { return handleError(res, err); }
+    if(!user) { return res.status(404).send('Not Found'); }
+    var updated = _.merge(user, req.body);
+    user.save(function (err) {
+      //if (err) { return handleError(res, err); }
+      return res.status(200).json(user);
+    });
+  });
+};
+
 /**
  * Deletes a user
  * restriction: 'admin'
@@ -174,6 +191,8 @@ exports.me = function(req, res, next) {
   User.findOne({
     _id: userId
   }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
+    console.log('user.me');
+    console.log(user);
     if (err) return next(err);
     if (!user) return res.status(401).send('Unauthorized');
     res.json(user);

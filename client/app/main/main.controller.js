@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('seedlyApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Pitch) {
+  .controller('MainCtrl', function ($scope, $http, $cookieStore, socket, Pitch, User) {
+    $scope.user = {};
+    if($cookieStore.get('token')) {
+      $scope.user = User.get();
+    }
+
     $scope.pitches = [];
 
     $http.get('/api/pitches').success(function(pitches) {

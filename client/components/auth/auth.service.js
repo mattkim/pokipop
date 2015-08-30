@@ -71,6 +71,19 @@ angular.module('seedlyApp')
           }.bind(this)).$promise;
       },
 
+      updateUser: function(user, callback) {
+        var cb = callback || angular.noop;
+
+        return User.update(user,
+          function(data) {
+            console.log(data);
+          },
+          function(err) {
+            console.log(err);
+            return cb(err);
+          }.bind(this)).$promise;
+      },
+
       /**
        * Change password
        *
@@ -166,6 +179,18 @@ angular.module('seedlyApp')
        */
       isBuyer: function() {
         return currentUser.customerType === 'buyer';
+      },
+
+      getFacebook: function() {
+        return currentUser.facebook;
+      },
+
+      getTwitter: function() {
+        return currentUser.twitter;
+      },
+
+      getLocal: function() {
+        return currentUser.email;
       },
 
       /**
