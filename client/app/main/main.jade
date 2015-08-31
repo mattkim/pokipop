@@ -3,23 +3,31 @@ div.mainup
 
   header#banner.hero-unit
     .container
-      h4 Have an original TV show idea that needs to be made? Pitch it!
-      .row
-        .col-sm-4
-        .col-sm-4
-          form.form(name='form', ng-submit='pitchit(form)', novalidate='')
-            .form-group
-              input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', placeholder='the title')
-            .form-group
-              textarea.form-control(rows='4', name='description', ng-model='pitch.description', ng-maxlength='256', placeholder='the pitch (256 characters)')
+      .row#banner-new
+        .col-sm-12
+          h1 Pitch Your Comedy Show
+          h4 Have an original Comedy show idea that needs to be made?
+          a(href='/pitch')
+            button.btn.btn-default.btn-lg
+              | Pitch it!
+      //.row
+        //.col-sm-4
+        //.col-sm-4
+          //button.btn.btn-default.btn-lg
+          //  | Pitch it!
+          //form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+          //  .form-group
+          //    input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', placeholder='the title')
+          //  .form-group
+          //    textarea.form-control(rows='4', name='description', ng-model='pitch.description', ng-maxlength='256', placeholder='the pitch (256 characters)')
               // TODO: split genres into elements using directive
             //.form-group  
             //  input.form-control(type='text', name='genres', ng-model='pitch.genres', placeholder='genres i.e. comedy, action, zombie, etc')
             //.form-group
             //  input.form-control(type='text', name='youtubelink', ng-model='pitch.youtubelink' placeholder='youtube link... talk about your idea')
                 
-            button.btn.btn-default.btn-small(type='submit')
-              | Pitch it!
+          //  button.btn.btn-default.btn-small(type='submit')
+          //    | Pitch it!
 
 .container
   .row.page-header

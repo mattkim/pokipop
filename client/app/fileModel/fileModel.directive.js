@@ -14,7 +14,7 @@ angular.module('seedlyApp')
           scope.profilePictureFile = file;
 
           imgutil.loadImage(file).then(function(img) {
-            scope.user.profilePictureURL = img.src;
+            scope.profilePictureURL = img.src;
             scope.profilePictureLoaded = true;
             scope.profilePicture = img;
 

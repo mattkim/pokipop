@@ -1,0 +1,85 @@
+div(ng-include='"components/navbar/navbar.html"')
+.container
+  .row
+    .col-sm-12.center
+      .btn-group(role='group', aria-label='...')
+        button.btn.btn-default(ng-click='showEditProject()')
+          | Edit Project
+        button.btn.btn-default(ng-click='showEditDescription()')
+          | Edit Description
+        button.btn.btn-default(ng-click='showPreview()')
+          | Show Preview
+  hr
+  .row(ng-show='editProject')
+    .col-sm-3
+    .col-sm-6.center
+      form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+        .form-group
+          input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', placeholder='the title')
+        .form-group
+          input.form-control(type='text', name='tagline', ng-model='pitch.tagline', ng-maxlength='256', placeholder='tagline')
+        .form-group
+          img.img-rounded.img-lrg(src='{{profilePictureURL}}')
+          input(type='file', name='projectPictureURL', file-model='pitch.projectPictureURL', required='')
+        .form-group
+          input.form-control(type='text', name='youtubelink', ng-model='pitch.youtubelink' placeholder='youtube link... talk about your idea')
+        .form-group  
+          input.form-control(type='text', name='genres', ng-model='pitch.genres', placeholder='genres i.e. comedy, action, zombie, etc')
+        .form-group
+          input.form-control(type='text', name='financegoal', ng-model='pitch.financegoal' placeholder='$$$ goal')
+        .form-group
+          input.form-control(type='text', name='deadline', ng-model='pitch.deadline' placeholder='deadline')
+        button.btn.btn-default.btn-lg(type='submit')
+          | Pitch it!
+  .row(ng-show='editDescription')
+    .col-sm-3
+    .col-sm-6.center
+      form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+        .form-group
+          textarea.form-control(rows='4', name='description', ng-model='pitch.description', ng-maxlength='256', placeholder='the pitch (256 characters)')
+  .row(ng-show='preview')
+    .col-sm-2
+    .col-sm-8
+      .row
+        h1.center {{pitch.title}}
+      .row
+        p.center {{pitch.tagline}}
+      hr
+      .row
+        .col-sm-12
+          iframe(width='100%', height='500px', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+      hr
+      .row
+        .col-sm-5
+          .row
+            img.img-rounded.img-fill(src='{{profilePictureURL}}')
+          .row 
+            h3
+              $0 / ${{pitch.financegoal}}
+            p
+              | funded
+            h3
+              {{pitch.deadline}}
+            p
+              | is when funding ends
+            h3
+              // Note you have to ask for a whole season
+              | {{pitch.episodes}} episodes
+            p
+              | to order
+          .row
+            button.btn.btn-default.btn-lg
+              | Fund
+          hr
+          .row
+            .col-sm-4
+              | created by 
+              strong
+                | {{user.name}}
+            .col-sm-8
+              img.img-circle.img-sm(src='{{user.profilePictureURL}}')
+        .col-sm-7
+          h3 Description
+          p
+            | {{pitch.description}}
+      hr

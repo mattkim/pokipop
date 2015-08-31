@@ -45,12 +45,23 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
    height: 200px;
 }
 
-.img-sm {
+.img-sm-center {
    display:block;
    margin:auto;
    width: 75px;
    height: 75px;
 }
+
+.img-sm {
+   width: 75px;
+   height: 75px;
+}
+
+.img-fill {
+   width: 100%;
+   //height: 200px;
+}
+
 
 // Component styles are injected through grunt
 // injector
@@ -60,5 +71,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'changepassword/changepassword.scss';
 @import 'forgotpassword/forgotpassword.scss';
 @import 'main/main.scss';
+@import 'pitch/pitch.scss';
+@import 'project/project.scss';
 @import 'modal/modal.scss';
 // endinjector
