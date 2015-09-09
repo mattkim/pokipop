@@ -1,93 +1,236 @@
 div(ng-include='"components/navbar/navbar.html"')
-.container
-  .row
-    .col-sm-12.center
-      .btn-group(role='group', aria-label='...')
-        button.btn.btn-default(ng-click='showEditProject()')
-          | Edit Project
-        button.btn.btn-default(ng-click='showEditDescription()')
-          | Edit Description
-        button.btn.btn-default(ng-click='showPreview()')
-          | Show Preview
-
-      //button.btn.btn-default(type='submit')
-      //  | Pitch it!
-  hr
-  .row(ng-show='editProject')
-    .col-sm-3
-    .col-sm-6
-      form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+form.form(name='form', ng-submit='pitchit(form)', novalidate='')
+  .container  
+    .row
+      .col-sm-12.center
+        .btn-group.pad-right-sm(role='group', aria-label='...')
+          button.btn.btn-default.btn-square(type='button', ng-click='showEditProject()')
+            | Edit Project
+          button.btn.btn-default.btn-square(type='button', ng-click='showEditDescription()')
+            | Add Episodes
+          button.btn.btn-default.btn-square(type='button', ng-click='showPreview()')
+            | Show Preview
+        
+        button.btn.btn-default.btn-square(type='submit')
+          | Pitch it!
+    hr
+    .row(ng-show='editProject')
+      .col-sm-3
+      .col-sm-6
         table.table
           tr
             td
               label Title
             td
-              .form-group
-                input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256')
+              .form-group(ng-class='{ "has-success": form.title.$valid && submitted,\
+               "has-error": form.title.$invalid && submitted }')
+                input.form-control(type='text', name='title', ng-model='pitch.title', ng-maxlength='256', required='')
+                p.help-block(ng-show='form.title.$error.required && submitted')
+                  | A title is required
           tr
             td
               label Tagline
             td
-              .form-group
-                input.form-control(type='text', name='tagline', ng-model='pitch.tagline', ng-maxlength='256')
+              .form-group(ng-class='{ "has-success": form.tagline.$valid && submitted,\
+               "has-error": form.tagline.$invalid && submitted }')
+                input.form-control(type='text', name='tagline', ng-model='pitch.tagline', ng-maxlength='256', required='')
+                p.help-block(ng-show='form.tagline.$error.required && submitted')
+                  | A tagline is required
           tr
             td
               label Project Picture
             td
-              .form-group
-                img.img-rounded.img-lrg(src='{{profilePictureURL}}')
-                input(type='file', name='projectPictureURL', file-model='pitch.projectPictureURL', required='')
-          tr
-            td
-              label Youtube Link
-            td
-              .form-group
-                input.form-control(type='text', name='youtubelink', ng-model='pitch.youtubelink')
-          tr
-            td
-              label Genres
-            td
-              .form-group  
-                input.form-control(type='text', name='genres', ng-model='pitch.genres')
-  .row(ng-show='editDescription')
-    .col-sm-3
-    .col-sm-6.center
-      form.form(name='form', ng-submit='pitchit(form)', novalidate='')
-        .form-group
-          textarea.form-control(rows='20', name='description', ng-model='pitch.description')
-  .row(ng-show='preview')
-    .col-sm-2
-    .col-sm-8
-      .row
-        h1.center {{previewPitch.title}}
-      .row
-        p.center {{previewPitch.tagline}}
-      hr
-      .row
-        .col-sm-12
-          iframe(width='100%', height='500px', src='{{previewPitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
-      hr
-      .row
-        .col-sm-8.pitchpad
-          h3 The Pitch
-          p
-            | {{previewPitch.description}}
-        .col-sm-4
+              .form-group(ng-class='{ "has-success": form.projectPictureFile.$valid && submitted,\
+               "has-error": form.projectPictureFile.$invalid && submitted }')
+                img.img-rounded.img-lrg(src='{{pitch.projectPictureFile.src}}', ng-hide='pitch.projectPictureFile.src | isEmpty')
+                img.img-rounded.img-lrg(src='{{previewPitch.profilePictureURL}}', ng-show='pitch.projectPictureFile.src | isEmpty')
+                hr
+                input(type='file', name='projectPictureFile', ng-model='pitch.projectPictureFile', file-model='pitch.projectPictureFile', required='')
+                p.help-block(ng-show='form.projectPictureFile.$error.required && submitted')
+                  | A project picture is required
+    .row(ng-show='editDescription')
+      .col-sm-3
+      .col-sm-6
+        .row.margin-bottom-sm(ng-repeat='episode in pitch.episodes')
+          .row.pull-right
+            button.btn.btn-default.btn-sm(type='button', ng-click='removeEpisode(episode)')
+              span.glyphicon.glyphicon-remove.pad-right-sm
+              | Delete
           .row
-            img.img-rounded.img-fill(src='{{previewPitch.profilePictureURL}}')
+            .col-sm-3.center
+              a(href='#', ng-click='decrementEpisode(episode)', ng-if='episode.index > 0')
+                span.glyphicon.glyphicon-chevron-up(style='font-size:20px; color:gray')
+              h1.margin-top-sm(ng-if='episode.index === 0')
+                | Pitch
+              //p(ng-if='episode.index !== 0')
+              //  | Episode
+              h1.margin-top-sm(ng-if='episode.index !== 0')
+                | {{episode.index}}
+              a(href='#', ng-click='incrementEpisode(episode)', ng-if='episode.index < pitch.episodes.length-1')
+                span.glyphicon.glyphicon-chevron-down(style='font-size:20px; color:gray')
+            .col-sm-9
+              table.table
+                tr
+                  td
+                    label Title
+                  td
+                    .form-group(ng-class='{ "has-success": form.title.$valid && submitted,\
+                     "has-error": form.title.$invalid && submitted }')
+                      input.form-control(type='text', name='title', ng-model='episode.title', ng-maxlength='256', required='')
+                      p.help-block(ng-show='form.title.$error.required && submitted')
+                        | A title is required
+                tr
+                  td
+                    label Description
+                  td
+                    .form-group(ng-class='{ "has-success": form.description.$valid && submitted,\
+                     "has-error": form.description.$invalid && submitted }')
+                      textarea.form-control(rows=3, name='description', ng-model='episode.description', required='')
+                      p.help-block(ng-show='form.description.$error.required && submitted')
+                        | A description is required
+                tr
+                  td
+                    label Episode Picture
+                  td
+                    .form-group(ng-class='{ "has-success": form.projectPictureFile.$valid && submitted,\
+                     "has-error": form.projectPictureFile.$invalid && submitted }')
+                      img.img-rounded.img-lrg(src='{{episode.projectPictureFile.src}}', ng-hide='episode.projectPictureFile.src | isEmpty')
+                      img.img-rounded.img-lrg(src='{{previewPitch.profilePictureURL}}', ng-show='episode.projectPictureFile.src | isEmpty')
+                      hr
+                      input(type='file', name='projectPictureFile', ng-model='episode.projectPictureFile', file-model='episode.projectPictureFile', required='')
+                      p.help-block(ng-show='form.projectPictureFile.$error.required && submitted')
+                        | A project picture is required
+                tr
+                  td
+                    label Youtube Link
+                  td
+                    .form-group(ng-class='{ "has-success": form.youtubelink.$valid && submitted,\
+                     "has-error": form.youtubelink.$invalid && submitted || form.youtubelink.$error.pattern }')
+                      // We require the embedded youtube link
+                      input.form-control(type='text', name='youtubelink', ng-pattern='/https?:\/\/www\.youtube\.com\/embed\/.+/' ng-model='episode.youtubelink', required='')
+                      p.help-block(ng-show='form.youtubelink.$error.required && submitted')
+                        | Youtube link required
+                      p.help-block(ng-show='form.youtubelink.$error.pattern')
+                        | Embedded url required
+                        br
+                        | ex: https://www.youtube.com/embed/-abcdefghij
           hr
-          .row
-            a(href='#')
-              span.glyphicon.glyphicon-heart  Make it!
-          hr
-          .row
-            .col-sm-8
+        button.btn.btn-default(type='button', ng-click='addEpisode()')
+          span.glyphicon.glyphicon-plus.pad-right-sm
+          | Add Episode
+    .row(ng-show='false')
+      .col-sm-3
+      .col-sm-6.center
+        .form-group(ng-class='{ "has-success": form.description.$valid && submitted,\
+          "has-error": form.description.$invalid && submitted }')
+          textarea.form-control(rows='20', name='description', ng-model='pitch.description', required='')
+          p.help-block(ng-show='form.description.$error.required && submitted')
+            | A pitch is required
+    .row(ng-show='preview')
+      .container  
+        .row
+          .col-sm-12
+            .row
+              .col-sm-12
+                h1(ng-hide='pitch.title | isEmpty') {{pitch.title}}
+                h1(ng-show='pitch.title | isEmpty') {{previewPitch.title}}
+                p(ng-hide='pitch.tagline | isEmpty') {{pitch.tagline}}
+                p(ng-show='pitch.tagline | isEmpty') {{previewPitch.tagline}}
+            .row
+              .col-sm-8
+                iframe(width='100%', height='400px', src='{{pitch.episodes[0].youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+              .col-sm-4
+                h3(ng-hide='pitch.episodes[0].title | isEmpty') {{pitch.episodes[0].title}}
+                h3(ng-show='pitch.episodes[0].title | isEmpty') {{previewPitch.episodes[0].title}}
+                p(ng-hide='pitch.episodes[0].index | isEmpty')
+                  | Episode: {{pitch.episodes[0].index}}
+                p(ng-show='pitch.episodes[0].index | isEmpty')
+                  | Episode: {{previewPitch.episodes[0].index}}
+                p(ng-hide='pitch.episodes[0].description | isEmpty')
+                  | {{pitch.episodes[0].description}}
+                p(ng-show='pitch.episodes[0].description | isEmpty')
+                  | {{previewPitch.episodes[0].description}}
+                hr
+                .row
+                  h1
+                    | {{previewPitch.subscriberCount}}
+                  p
+                    | are subbing this
+                  // TODO: make this a modal pop up
+                  button.btn.btn-default
+                    span.glyphicon.glyphicon-heart.pad-right-sm
+                    | Subscribe!
+                hr
+                .row
+                  .col-sm-8
+                    p
+                      | created by 
+                    p
+                      strong
+                        | {{user.name}}
+                  .col-sm-4
+                    img.img-circle.img-sm(src='{{user.profilePictureURL}}')
+            hr
+            .row
+              .col-sm-12
+                h3 Episodes
+                ul.list-unstyled(ng-repeat='episode in pitch.episodes')
+                  li.col-sm-4.margin-bottom-sm(style="height:200px; overflow:hidden")
+                    p
+                      img.img-rounded.img-sm-h.img-center(src='{{episode.projectPictureFile.src}}', ng-hide='episode.projectPictureFile | isEmpty')
+                      img.img-rounded.img-sm-h.img-center(src='{{previewPitch.profilePictureURL}}', ng-show='episode.projectPictureFile | isEmpty')
+                    p
+                      | {{episode.index}}. {{episode.title}}
+                    p
+                      | {{episode.description}}
+                      // TODO: truncate description
+              
+            hr
+    .row(ng-show='false')
+      .col-sm-2
+      .col-sm-8
+        .row
+          h1.center(ng-hide='pitch.title | isEmpty') {{pitch.title}}
+          h1.center(ng-show='pitch.title | isEmpty') {{previewPitch.title}}
+        .row
+          p.center(ng-hide='pitch.tagline | isEmpty') {{pitch.tagline}}
+          p.center(ng-show='pitch.tagline | isEmpty') {{previewPitch.tagline}}
+        hr
+        .row
+          .col-sm-12
+            iframe(width='100%', height='500px', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen, ng-hide='pitch.youtubelink | isEmpty')
+            img.img-rounded(width='100%', height='500px', src='{{previewPitch.defaultVideoImageURL | trustAsResourceUrl}}', ng-show='pitch.youtubelink | isEmpty')
+        hr
+        .row
+          .col-sm-8.pad-right-lrg
+            h3 The Pitch
+            p(ng-hide='pitch.description | isEmpty')
+              | {{pitch.description}}
+            p(ng-show='pitch.description | isEmpty')
+              | {{previewPitch.description}}
+          .col-sm-4
+            .row
+              img.img-rounded.img-fill(src='{{pitch.projectPictureFile.src}}', ng-hide='pitch.projectPictureFile.src | isEmpty')
+              img.img-rounded.img-fill(src='{{previewPitch.profilePictureURL}}', ng-show='pitch.projectPictureFile.src | isEmpty')
+            hr
+            .row
+              h1
+                | 0
               p
-                | created by 
+                | want this made
               p
-                strong
-                  | {{user.name}}
-            .col-sm-4
-              img.img-circle.img-sm(src='{{user.profilePictureURL}}')
-        
-      hr
+                button.btn.btn-default
+                  span.glyphicon.glyphicon-heart.pad-right-sm
+                  | Make it!
+            hr
+            .row
+              .col-sm-8
+                p
+                  | created by 
+                p
+                  strong
+                    | {{user.name}}
+              .col-sm-4
+                img.img-circle.img-sm(src='{{user.profilePictureURL}}')
+          
+        hr

@@ -1,0 +1,18 @@
+div(ng-include='"components/navbar/navbar.html"')
+.container
+  .row
+    .col-sm-4
+    .col-sm-4
+      h4.center
+        | Give us feedback!
+      form.form(name='form', ng-submit='login(form)', novalidate='')
+        .form-group
+          label Email
+          input.form-control(type='text', name='feedback.email', ng-model='user.email')
+        .form-group
+          label Message
+          textarea.form-control(rows='10', name='feedback.description', ng-model='pitch.description', required='')
+
+        button.btn.btn-default
+          span.glyphicon.glyphicon-heart.pad-right-sm
+          | Send

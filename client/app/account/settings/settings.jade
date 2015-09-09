@@ -4,7 +4,7 @@ div(ng-include='"components/navbar/navbar.html"')
     .col-sm-4
     .col-sm-4
       //canvas#canvas.canvasimg.img-circle(ng-show='profilePictureLoaded')
-      img.img-circle.img-lrg(src='{{user.profilePictureURL}}')
+      img.img-circle.img-lrg.img-center(src='{{user.profilePictureURL}}')
       hr
       form.form(name='form', ng-submit='updateSettings(form)', novalidate='')
         .form-group

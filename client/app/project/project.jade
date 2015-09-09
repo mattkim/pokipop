@@ -1,2 +1,44 @@
-.col-md-12
-    | This is the project view.
+div(ng-include='"components/navbar/navbar.html"')
+.container  
+  .row
+    .col-sm-2
+    .col-sm-8
+      .row
+        h1.center {{pitch.title}}
+      .row
+        p.center {{pitch.tagline}}
+      hr
+      .row
+        .col-sm-12
+          iframe(width='100%', height='500px', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+      hr
+      .row
+        .col-sm-8.pad-right-lrg
+          h3 The Pitch
+          p
+            | {{pitch.description}}
+        .col-sm-4
+          .row
+            img.img-rounded.img-fill(src='{{pitch.projectPictureURL}}', ng-hide='pitch.projectPictureURL | isEmpty')
+          hr
+          .row
+            h1
+              | {{pitch.makes}}
+            p
+              | want this made
+            p
+              button.btn.btn-default
+                span.glyphicon.glyphicon-heart.pad-right-sm
+                | Make it!
+          hr
+          .row
+            .col-sm-8
+              p
+                | created by 
+              p
+                strong
+                  | {{user.name}}
+            .col-sm-4
+              img.img-circle.img-sm(src='{{user.profilePictureURL}}')
+        
+      hr

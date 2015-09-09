@@ -1,0 +1,25 @@
+div(ng-include='"components/navbar/navbar.html"')
+
+.container
+  .row
+    .col-sm-3
+    .col-sm-6
+      div(ng-repeat='pitch in pitches')
+        .row
+          .col-sm-3
+            img.img-rounded.img-fill(src='{{pitch.projectPictureURL}}')
+          .col-sm-7
+            h4
+              a(href='/project/{{pitch._id}}')
+                {{pitch.title}}
+            p
+              {{pitch.tagline}}
+            //p
+            //  iframe(width='560', height='315', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+          .col-sm-2
+            .row
+              .col-sm-12
+                p  
+                  span.glyphicon.glyphicon-heart.pad-right-sm
+                  {{pitch.makes}}
+        hr

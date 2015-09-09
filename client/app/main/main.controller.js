@@ -9,8 +9,11 @@ angular.module('seedlyApp')
 
     $scope.pitches = [];
 
+    // TODO: limit this to 10 pitches
     $http.get('/api/pitches').success(function(pitches) {
       $scope.pitches = pitches;
+      // TODO: hard code this one?
+      $scope.poppitch = pitches[0];
       // Oh cool this is how it works where updates are immediate
       socket.syncUpdates('pitch', $scope.pitches);
     });

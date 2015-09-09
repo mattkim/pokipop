@@ -8,6 +8,13 @@ angular.module('seedlyApp')
     },{
     	update: {
     		method: 'PUT'
-    	}
+    	},
+        findByUser: {
+          method: 'GET',
+          isArray: true,
+          params: {
+            controller: 'findByUser'
+          }
+        }
     });
   });

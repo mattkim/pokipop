@@ -1,0 +1,51 @@
+div(ng-include='"components/navbar/navbar.html"')
+.container  
+  .row
+    .col-sm-12
+      .row
+        .col-sm-12
+          h1 Series Title
+          p
+            | A tagline about this series
+      .row
+        .col-sm-8
+          iframe(width='100%', height='400px', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+        .col-sm-4
+          .row
+            h3 {{pitch.title}}
+          .row
+            p {{pitch.tagline}}
+          hr
+          .row
+            h1
+              | {{pitch.subscriberCount}}
+            p
+              | are watching this
+            // TODO: make this a modal pop up
+            button.btn.btn-default
+              span.glyphicon.glyphicon-heart.pad-right-sm
+              | Subscribe!
+          hr
+          .row
+            .col-sm-8
+              p
+                | created by 
+              p
+                strong
+                  | {{user.name}}
+            .col-sm-4
+              img.img-circle.img-sm(src='{{user.profilePictureURL}}')
+      hr
+      .row
+        .col-sm-12
+          h3 Episodes
+          ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='episode in pitch.episodes')
+            li
+              p
+                img.img-rounded.img-sm-h.img-center(src='{{episode.imgurl}}')
+              p
+                | {{episode.title}}
+              p
+                | {{episode.tagline}}
+        
+      hr
