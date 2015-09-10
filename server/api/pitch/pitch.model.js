@@ -9,14 +9,20 @@ var UserSchema = new Schema({
   profilePictureURL: String
 });
 
+var EpisodeSchema = new Schema({
+  index: Number,
+  title: String,
+  description: String,
+  projectPictureURL: String,
+  youtubelink: String
+});
+
 var PitchSchema = new Schema({
   title: String,
   tagline: String,
-  description: String,
-  genres: [String],
   projectPictureURL: String,
-  youtubelink: String,
-  makes: Number,
+  subscriberCount: Number,
+  episodes: [EpisodeSchema],
   user: {type:Schema.Types.ObjectId, ref:'Users', index: true}
 });
 

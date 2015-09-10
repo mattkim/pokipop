@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('seedlyApp')
-  .controller('PitchCtrl', function ($scope, $cookieStore, $location, User, Pitch, imgutil, s3) {
+  .controller('PitchCtrl', function ($scope, $cookieStore, $location, $q, User, Pitch, imgutil, s3) {
   	$scope.user = {};
     if($cookieStore.get('token')) {
       $scope.user = User.get();
@@ -78,38 +78,56 @@ angular.module('seedlyApp')
       $scope.pitch.episodes.push({index: $scope.pitch.episodes.length});
     };
 
+    var upload = function(ename, etype, efile, episode) {
+      return s3.upload(ename, etype, efile).then(
+        function(res) {
+          episode.projectPictureURL = res.imgurl;
+        },
+        function(err) {
+          console.log(err);
+        }
+      );
+    };
+
     $scope.pitchit = function(form) {
       $scope.submitted = true;
 
       if(form.$valid) {
+        console.log('uploading images...');
+
         var file = $scope.pitch.projectPictureFile;
         var name = file.name;
         var type = file.type;
 
-        s3.upload(name, type, file).then(
-          function(res) {
-            console.log(res.imgurl);
-            $scope.pitch.projectPictureURL = res.imgurl;
-            $scope.imageUpload = res.imageUpload;
+        var promises = [];
+        promises.push(upload(name, type, file, $scope.pitch));
 
-            Pitch.save({
-              title: $scope.pitch.title,
-              tagline: $scope.pitch.tagline,
-              description: $scope.pitch.description,
-              youtubelink: $scope.pitch.youtubelink,
-              projectPictureURL: $scope.pitch.projectPictureURL,
-              makes: 0,
-              user: $scope.user._id
-            }, function(data) {
-              console.log(data);
-              // Go to the project page.
-              $location.path('/project/' + data._id);
-            }, function(err) {
-              console.log(err);
+        for(var i = 0; i < $scope.pitch.episodes.length; i++) {
+          var episode = $scope.pitch.episodes[i];
+          var efile = episode.projectPictureFile;
+          var ename = efile.name;
+          var etype = efile.type;
+
+          promises.push(upload(ename, etype, efile, episode));
+        }
+
+        $q.all(promises).then(
+          function() {
+            console.log('all s3 uploads completed!');
+            console.log($scope.pitch);
+
+            // Set the owning user.
+            $scope.pitch.user = $scope.user._id;
+
+            Pitch.save(
+              $scope.pitch,
+              function(data) {
+                console.log(data);
+                // Go to the project page.
+                $location.path('/watch/' + data._id);
+              }, function(err) {
+                console.log(err);
             });
-          },
-          function(err) {
-            console.log(err);
           }
         );
       }

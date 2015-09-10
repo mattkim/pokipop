@@ -4,23 +4,23 @@ div(ng-include='"components/navbar/navbar.html"')
     .col-sm-12
       .row
         .col-sm-12
-          h1 Series Title
-          p
-            | A tagline about this series
+          h1 {{pitch.title}}
+          p {{pitch.tagline}}
       .row
         .col-sm-8
-          iframe(width='100%', height='400px', src='{{pitch.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+          iframe(width='100%', height='400px', src='{{pitch.episodes[0].youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
         .col-sm-4
-          .row
-            h3 {{pitch.title}}
-          .row
-            p {{pitch.tagline}}
+          h3 {{pitch.episodes[0].title}}
+          p
+            | Episode: {{pitch.episodes[0].index}}
+          p
+            | {{pitch.episodes[0].description}}
           hr
           .row
             h1
               | {{pitch.subscriberCount}}
             p
-              | are watching this
+              | are subbing this
             // TODO: make this a modal pop up
             button.btn.btn-default
               span.glyphicon.glyphicon-heart.pad-right-sm
@@ -39,13 +39,14 @@ div(ng-include='"components/navbar/navbar.html"')
       .row
         .col-sm-12
           h3 Episodes
-          ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='episode in pitch.episodes')
-            li
+          ul.list-unstyled(ng-repeat='episode in pitch.episodes')
+            li.col-sm-4.margin-bottom-sm(style="height:200px; overflow:hidden")
               p
-                img.img-rounded.img-sm-h.img-center(src='{{episode.imgurl}}')
+                img.img-rounded.img-sm-h.img-center(src='{{episode.projectPictureURL}}')
               p
-                | {{episode.title}}
+                | {{episode.index}}. {{episode.title}}
               p
-                | {{episode.tagline}}
+                | {{episode.description}}
         
       hr
+  hr

@@ -17,29 +17,33 @@ div.mainup
       h3
         | Discover Fresh Pitches and Pilots
       .row
-        img.img-rounded.img-fill(src='{{poppitch.projectPictureURL}}')
-        h4
-          a(href='/project/{{poppitch._id}}')
-            | {{poppitch.title}}
-        p
-          | {{poppitch.tagline}}
-        h1
-          {{poppitch.makes}}
-        p
-          | want this made
-        p
-          button.btn.btn-default
-            span.glyphicon.glyphicon-heart.pad-right-sm
-            | Make it!
-      .row
         .col-sm-8
-          p
-            | created by 
-          p
-            strong
-              | {{poppitch.user.name}}
+          img.img-rounded.img-fill(src='{{poppitch.projectPictureURL}}')
         .col-sm-4
-          img.img-circle.img-sm(src='{{poppitch.user.profilePictureURL}}')
+          .row
+            .col-sm-12
+              h4
+                a(href='/watch/{{poppitch._id}}')
+                  | {{poppitch.title}}
+              p
+                | {{poppitch.tagline}}
+              h1
+                {{poppitch.subscriberCount}}
+              p
+                | are subbing this
+              p
+                button.btn.btn-default
+                  span.glyphicon.glyphicon-heart.pad-right-sm
+                  | Subscribe!
+          .row
+            .col-sm-8
+              p
+                | created by 
+              p
+                strong
+                  | {{poppitch.user.name}}
+            .col-sm-4
+              img.img-circle.img-sm(src='{{poppitch.user.profilePictureURL}}')
 
     .col-sm-5
       h1

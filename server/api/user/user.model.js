@@ -55,6 +55,7 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
+      'profilePictureURL' : this.profilePictureURL,
       'role': this.role
     };
   });

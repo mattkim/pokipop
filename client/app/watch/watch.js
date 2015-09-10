@@ -4,7 +4,7 @@ angular.module('seedlyApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('watch', {
-        url: '/watch',
+        url: '/watch/:id',
         templateUrl: 'app/watch/watch.html',
         controller: 'WatchCtrl'
       });

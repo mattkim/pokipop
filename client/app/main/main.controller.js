@@ -14,6 +14,12 @@ angular.module('seedlyApp')
       $scope.pitches = pitches;
       // TODO: hard code this one?
       $scope.poppitch = pitches[0];
+
+      User.get({id:$scope.poppitch.user}, function(res) {
+            console.log('got user!');
+            console.log(res);
+            $scope.poppitch.user = res;
+        });
       // Oh cool this is how it works where updates are immediate
       socket.syncUpdates('pitch', $scope.pitches);
     });
