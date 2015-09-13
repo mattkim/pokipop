@@ -18,21 +18,25 @@ div.mainup
         | Discover Fresh Pitches and Pilots
       .row
         .col-sm-8
-          img.img-rounded.img-fill(src='{{poppitch.projectPictureURL}}')
+          img.img-rounded.img-fill(src='{{pitch.projectPictureURL}}')
         .col-sm-4
           .row
             .col-sm-12
               h4
-                a(href='/watch/{{poppitch._id}}')
-                  | {{poppitch.title}}
+                a(href='/watch/{{pitch._id}}')
+                  | {{pitch.title}}
               p
-                | {{poppitch.tagline}}
+                | {{pitch.tagline}}
               h1
-                {{poppitch.subscriberCount}}
+                {{pitch.subscriberCount}}
+                span(ng-show='subscribed', style='font-size:20px')
+                  |  and
+                span(ng-show='subscribed', style='font-size:20px')
+                  |  YOU
               p
                 | are subbing this
               p
-                button.btn.btn-default
+                button.btn.btn-default(type='button', ng-click='open()', ng-hide='subscribed')
                   span.glyphicon.glyphicon-heart.pad-right-sm
                   | Subscribe!
           .row
@@ -41,9 +45,9 @@ div.mainup
                 | created by 
               p
                 strong
-                  | {{poppitch.user.name}}
+                  | {{pitch.user.name}}
             .col-sm-4
-              img.img-circle.img-sm(src='{{poppitch.user.profilePictureURL}}')
+              img.img-circle.img-sm(src='{{pitch.user.profilePictureURL}}')
 
     .col-sm-5
       h1

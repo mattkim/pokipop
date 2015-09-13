@@ -1,0 +1,27 @@
+// TODO: center this on the screen
+div.modal-header
+  h4.modal-title
+    | Choose your subscription...
+form.form(name='form', ng-submit='subscribe(form)', novalidate='')
+  div.modal-body(ng-hide='justSubscribed')
+    // TODO: convert this data model into a bundling structure2
+    
+    div(ng-repeat='offer in pitch.offers')
+      hr
+      label
+        // TODO: fix this styling later
+        // TODO: default selection?
+        input.margin-right-sm(type='radio', name='subradio', ng-model='setCurrOffer(offer)', style='margin-right:10px')
+        | ${{offer.price}}
+        | a month
+      p
+        | {{offer.description}}
+  div.modal-body(ng-show='justSubscribed')
+    p
+      | Congratulations you are subscribed!
+  div.modal-footer(ng-hide='justSubscribed')
+    button.btn.btn-default(type='submit')
+      | Submit
+  div.modal-footer(ng-show='justSubscribed')
+    button.btn.btn-default(type='button', ng-click='$dismiss()')
+      | Close

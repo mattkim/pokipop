@@ -19,10 +19,17 @@ div(ng-include='"components/navbar/navbar.html"')
           .row
             h1
               | {{pitch.subscriberCount}}
-            p
+              span(ng-show='subscribed', style='font-size:20px')
+                |  and
+              span(ng-show='subscribed', style='font-size:20px')
+                |  YOU
+            p 
               | are subbing this
+            a(href='#', ng-click='open()', ng-show='subscribed')
+              p(ng-show='subscribed')
+                | edit subscription
             // TODO: make this a modal pop up
-            button.btn.btn-default
+            button.btn.btn-default(type='button', ng-click='open()', ng-hide='subscribed')
               span.glyphicon.glyphicon-heart.pad-right-sm
               | Subscribe!
           hr
@@ -49,4 +56,3 @@ div(ng-include='"components/navbar/navbar.html"')
                 | {{episode.description}}
         
       hr
-  hr

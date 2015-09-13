@@ -24,6 +24,69 @@ angular.module('seedlyApp')
 
     // Public API here
     return {
+      generic: {
+        // I'm pretty sure this is wrong but it works.
+        open: function(template, scope) {
+          // TODO: this root scope seems to not be working.
+          //var modalScope = $rootScope.$new();
+          var modalScope = scope;
+
+          var modalInstance = $modal.open({
+            templateUrl: template,
+            windowClass: 'modal-info',
+            scope: modalScope,
+            size: 'sm'
+          });
+
+          console.log('This is the modal scope.');
+          console.log(modalScope);
+
+          modalInstance.result.then(function() {
+              console.log('yay!');
+          });
+        }
+      },
+      subscription: {
+        subscribe: function(cb) {
+          cb = cb || angular.noop;
+
+          /**
+           * Open a delete confirmation modal
+           * @param  {String} name   - name or info to show on modal
+           * @param  {All}           - any additional args are passed straight to cb callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+                name = args.shift(),
+                deleteModal;
+
+            deleteModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Subscribe to your favorite plan...',
+                html: '<p>Are you sure you want to delete <strong>' + name + '</strong> ?</p>',
+                buttons: [{
+                  classes: 'btn-info',
+                  text: 'Delete',
+                  click: function(e) {
+                    deleteModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'Cancel',
+                  click: function(e) {
+                    deleteModal.dismiss(e);
+                  }
+                }]
+              }
+            }, 'modal-info');
+
+            deleteModal.result.then(function(event) {
+              cb.apply(event, args);
+            });
+          };
+        }
+      },
 
       /* Confirmation modals */
       confirm: {

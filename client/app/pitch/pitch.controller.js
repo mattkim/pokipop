@@ -13,6 +13,8 @@ angular.module('seedlyApp')
     $scope.pitch.subscriberCount = 0;
     $scope.pitch.episodes = [{index: 0}];
 
+    $scope.pitch.offers = [{index: 0, price: 0}];
+
     $scope.previewPitch = {};
     $scope.previewPitch.title = 'Sample Title';
     $scope.previewPitch.tagline = 'This is a sample tagline, get your own!';
@@ -78,6 +80,21 @@ angular.module('seedlyApp')
       $scope.pitch.episodes.push({index: $scope.pitch.episodes.length});
     };
 
+    $scope.addOffer = function() {
+      $scope.pitch.offers.push({index: $scope.pitch.offers.length, price: 0});
+    };
+
+    // TODO: pass in the index to remove?
+    $scope.removeOffer = function(offer) {
+      var index = offer.index;
+      
+      $scope.pitch.offers.splice(index, 1);
+
+      for(var i = 0; i < $scope.pitch.offers.length; i++) {
+        $scope.pitch.offers[i].index = i;
+      }
+    };
+
     var upload = function(ename, etype, efile, episode) {
       return s3.upload(ename, etype, efile).then(
         function(res) {
@@ -133,22 +150,32 @@ angular.module('seedlyApp')
       }
     };
 
+    $scope.showOffers = function() {
+      $scope.editProject = false;
+      $scope.editDescription = false;
+      $scope.preview = false;
+      $scope.showOffersFlag = true;
+    };
+
     $scope.showEditProject = function() {
       $scope.editProject = true;
       $scope.editDescription = false;
       $scope.preview = false;
+      $scope.showOffersFlag = false;
     };
 
     $scope.showEditDescription = function() {
       $scope.editProject = false;
       $scope.editDescription = true;
       $scope.preview = false;
+      $scope.showOffersFlag = false;
     };
 
     $scope.showPreview = function() {
       $scope.editProject = false;
       $scope.editDescription = false;
       $scope.preview = true;
+      $scope.showOffersFlag = false;
     };
 
   });

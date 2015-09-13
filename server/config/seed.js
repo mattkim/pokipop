@@ -15,48 +15,41 @@ User.find({}).remove(function() {
     email: 'test@test.com',
     profilePictureURL: 'https://s3-us-west-1.amazonaws.com/pokipop/linkedinprofilepic.jpg',
     password: 'test'
-  }, function() {
-      console.log('finished populating users');
-    }
-  );
-});
+  }, function(res) {
+    console.log('finished populating users');
 
-Pitch.find({}).remove(function() {
-  Pitch.create({
-    title: 'Friends',
-    description: 'A group of friends living life in New York getting into wacky antics.',
-    genres: ['comedy', 'sitcom'],
-    youtubelink: 'https://www.youtube.com/embed/V5hOm8_3mJA',
-    makes: 77,
-    retakes: 10,
-    user: {
-      name: 'test',
-      profilePictureURL: 'https://s3-us-west-1.amazonaws.com/pokipop/linkedinprofilepic.jpg'
-    }
-  },{
-    title: 'Seinfeld',
-    description: 'A group of friends living life in New York getting into wacky antics but slightly differently.',
-    genres: ['comedy', 'sitcom'],
-    youtubelink: 'https://www.youtube.com/embed/PWBcd-Aq0D4',
-    makes: 77,
-    retakes: 10,
-    user: {
-      name: 'test',
-      profilePictureURL: 'https://s3-us-west-1.amazonaws.com/pokipop/linkedinprofilepic.jpg'
-    }
-  },{
-    title: 'How I Met Your Mother',
-    description: 'A group of friends living life in New York getting into wacky antics even more differently.',
-    genres: ['comedy', 'sitcom'],
-    youtubelink: 'https://www.youtube.com/embed/aJtVL2_fA5w',
-    makes: 77,
-    retakes: 10,
-    user: {
-      name: 'test',
-      profilePictureURL: 'https://s3-us-west-1.amazonaws.com/pokipop/linkedinprofilepic.jpg'
-    }
-  }, function() {
-      console.log('finished populating users');
-    }
-  );
+    User.find({name:'Test'}).then(
+      function(user) {
+        console.log(user);
+        Pitch.find({}).remove(function() {
+          Pitch.create({
+            title: 'Friends',
+            tagline: 'A group of friends living life in New York getting into wacky antics.',
+            projectPictureURL: 'https://s3-us-west-1.amazonaws.com/seedlyfoods/ff40e343-c481-45c5-8e9e-72b9f1fc4d19-babybear.jpg',
+            subscriberCount: 77,
+            user: user._id,
+            episodes: [{
+              index: 0,
+              title: 'We are friends',
+              description: 'How they meet up',
+              youtubelink: 'https://www.youtube.com/embed/V5hOm8_3mJA',
+              projectPictureURL: 'https://s3-us-west-1.amazonaws.com/seedlyfoods/edded65f-1ad3-45bc-aab3-2de28fada162-blahblah+copy.jpg'
+            }],
+            offers: [{
+              index: 0,
+              price: 3,
+              description: 'This is the basic subscription offering'
+            },{
+              index: 1,
+              price: 10,
+              description: 'This is the premium subscription offering'
+            }]
+          }, function() {
+              console.log('finished populating pitches');
+            }
+          );
+        });
+      }
+    );
+  });
 });

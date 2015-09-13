@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('seedlyApp')
-  .controller('MainCtrl', function ($scope, $http, $cookieStore, socket, Pitch, User) {
+  .controller('MainCtrl', function ($scope, $http, $cookieStore, socket, Pitch, User, Modal) {
     $scope.user = {};
     if($cookieStore.get('token')) {
       $scope.user = User.get();
@@ -13,16 +13,35 @@ angular.module('seedlyApp')
     $http.get('/api/pitches').success(function(pitches) {
       $scope.pitches = pitches;
       // TODO: hard code this one?
-      $scope.poppitch = pitches[0];
+      $scope.pitch = pitches[0];
 
-      User.get({id:$scope.poppitch.user}, function(res) {
+      console.log($scope.pitch);
+
+      User.get({id:$scope.pitch.user}, function(res) {
             console.log('got user!');
             console.log(res);
-            $scope.poppitch.user = res;
+            $scope.pitch.user = res;
+        }, function(err) {
+          console.log(err);
         });
       // Oh cool this is how it works where updates are immediate
       socket.syncUpdates('pitch', $scope.pitches);
     });
+
+    $scope.open = function() {
+      Modal.generic.open('app/watch/subscribemodal.html', $scope);
+    };
+
+    $scope.subscribe = function() {
+      // There could be different costs.
+      // Start out with a fixed cost?
+      // Or allow the user to set their own cost?
+      // Allow premium costs?
+      console.log('subscribe!');
+      // Also close modal....
+      // Actually show a button for closing
+      $scope.subscribed = true;
+    };
 
     $scope.pitchit = function(form) {
       $scope.submitted = true;

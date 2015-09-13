@@ -8,6 +8,8 @@ form.form(name='form', ng-submit='pitchit(form)', novalidate='')
             | Edit Project
           button.btn.btn-default.btn-square(type='button', ng-click='showEditDescription()')
             | Add Episodes
+          button.btn.btn-default.btn-square(type='button', ng-click='showOffers()')
+            | Add Offers
           button.btn.btn-default.btn-square(type='button', ng-click='showPreview()')
             | Show Preview
         
@@ -118,6 +120,40 @@ form.form(name='form', ng-submit='pitchit(form)', novalidate='')
         button.btn.btn-default(type='button', ng-click='addEpisode()')
           span.glyphicon.glyphicon-plus.pad-right-sm
           | Add Episode
+    .row(ng-show='showOffersFlag')
+      .container
+        .col-sm-3
+        .col-sm-6
+          .row.margin-bottom-sm(ng-repeat='offer in pitch.offers')
+            .row.pull-right
+              button.btn.btn-default.btn-sm(type='button', ng-click='removeOffer(offer)')
+                span.glyphicon.glyphicon-remove.pad-right-sm
+                | Delete
+            .row
+              table.table
+                tr
+                  td
+                    label Price per month
+                  td
+                    .form-group(ng-class='{ "has-success": form.price.$valid && submitted,\
+                     "has-error": form.price.$invalid && submitted }')
+                      //TODO: change width
+                      input.form-control(type='text', name='price', ng-model='offer.price', required='')
+                      p.help-block(ng-show='form.price.$error.required && submitted')
+                        | A price is required
+                tr
+                  td
+                    label Description
+                  td
+                    .form-group(ng-class='{ "has-success": form.description.$valid && submitted,\
+                     "has-error": form.description.$invalid && submitted }')
+                      textarea.form-control(rows=3, name='description', ng-model='offer.description', required='')
+                      p.help-block(ng-show='form.description.$error.required && submitted')
+                        | A description is 
+              hr
+          button.btn.btn-default(type='button', ng-click='addOffer()')
+            span.glyphicon.glyphicon-plus.pad-right-sm
+            | Add Offer
     .row(ng-show='preview')
       .container  
         .row

@@ -17,12 +17,20 @@ var EpisodeSchema = new Schema({
   youtubelink: String
 });
 
+// TODO: Double check that this schema works.
+var OfferSchema = new Schema({
+  index: Number,
+  price: Number,
+  description: String
+});
+
 var PitchSchema = new Schema({
   title: String,
   tagline: String,
   projectPictureURL: String,
   subscriberCount: Number,
   episodes: [EpisodeSchema],
+  offers: [OfferSchema],
   user: {type:Schema.Types.ObjectId, ref:'Users', index: true}
 });
 

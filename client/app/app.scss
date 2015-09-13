@@ -98,6 +98,10 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
   margin-top: 10px;
 }
 
+.margin-right-sm {
+  margin-right: 10px;
+}
+
 .pad-bottom-sm {
   padding-bottom: 10px;
 }
@@ -140,6 +144,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'main/main.scss';
 @import 'pitch/pitch.scss';
 @import 'project/project.scss';
+@import 'subscriptions/subscriptions.scss';
 @import 'userproject/userproject.scss';
 @import 'watch/watch.scss';
 @import 'modal/modal.scss';

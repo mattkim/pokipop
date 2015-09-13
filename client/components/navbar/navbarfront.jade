@@ -35,6 +35,8 @@ div.navbar.navbar-default.navbar-static-top.hero(ng-controller='NavbarCtrl')
               a(href='/pitch') Create Pitch
             li(ng-show='isLoggedIn()', ng-class='{active: isActive("/userproject")}')
               a(href='/userproject/{{getCurrentUser()._id}}') Projects
+            li(ng-show='isLoggedIn()', ng-class='{active: isActive("/subscriptions")}')
+              a(href='/subscriptions') Subscriptions
             li(ng-show='isLoggedIn()', ng-class='{active: isActive("/settings")}')
               a(href='/settings') Settings
 
