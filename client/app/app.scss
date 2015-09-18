@@ -131,6 +131,14 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     border-top: none !important; 
 }
 
+.success-text {
+  color: green
+}
+
+.error-text {
+  color: red
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'about/about.scss';

@@ -95,6 +95,7 @@ angular.module('seedlyApp')
       }
     };
 
+    // TODO: check image size...
     var upload = function(ename, etype, efile, episode) {
       return s3.upload(ename, etype, efile).then(
         function(res) {

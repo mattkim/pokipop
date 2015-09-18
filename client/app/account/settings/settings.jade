@@ -1,9 +1,9 @@
 div(ng-include='"components/navbar/navbar.html"')
+
 .container
   .row
     .col-sm-4
     .col-sm-4
-      //canvas#canvas.canvasimg.img-circle(ng-show='profilePictureLoaded')
       img.img-circle.img-lrg.img-center(src='{{user.profilePictureURL}}')
       hr
       form.form(name='form', ng-submit='updateSettings(form)', novalidate='')
@@ -22,17 +22,28 @@ div(ng-include='"components/navbar/navbar.html"')
 
         p(ng-hide='twitter | isEmpty')
           label twitter connected
+        p
+          button.btn.btn-default.btn-small(type='submit') Save Changes
 
-        button.btn.btn-default.btn-small(type='submit') Save Changes
-
+        p.success-text(ng-hide='profileSuccess | isEmpty')
+          | {{profileSuccess.message}}
+        p.error-text(ng-repeat='error in profileErrors', ng-hide='profileErrors | isEmpty')
+          | {{error.message}}
       hr
 
-      form.form(name='form', ng-submit='changePassword(form)', novalidate='', ng-if='local | isNotEmpty')
+      form.form(name='form', ng-submit='changePassword(form)', ng-if='local | isNotEmpty')
         .form-group
           label Old Password
           input.form-control(type='password', name='password', ng-model='user.oldPassword')
         .form-group
           label New Password
           input.form-control(type='password', name='password', ng-model='user.newPassword')
-      
-        button.btn.btn-default.btn-small(type='submit') Change Password
+        // TODO: this doesn't work
+        p
+          button.btn.btn-default.btn-small(type='submit') Change Password
+        p.success-text(ng-hide='passwordSuccess | isEmpty')
+          | {{passwordSuccess.message}}
+        p.error-text(ng-repeat='error in passwordErrors', ng-hide='passwordErrors | isEmpty')
+          | {{error.message}}
+
+div(ng-include='"components/footer/footer.html"')

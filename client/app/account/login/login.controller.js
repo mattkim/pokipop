@@ -24,8 +24,6 @@ angular.module('seedlyApp')
     };
 
     $scope.loginOauth = function(provider) {
-      // TODO: capture the response from this login, then pass this account
-      // and the local account to a merge api that merges the accounts
       $window.location.href = '/auth/' + provider;
     };
   });

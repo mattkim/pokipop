@@ -70,13 +70,5 @@ div.mainup
       p
         a(href='/about')
           | Read more...
-// TODO: refactor into .scss
-footer.footer(style='margin:0px')
-  .container
-    p
-      a(href='/about') About
-      = ' | '
-      a(href='/contact') Contact
-      = ' | '
-      ©2015 ognu.tv, All Rights Reserved
-  
+
+div(ng-include='"components/footer/footerfront.html"')

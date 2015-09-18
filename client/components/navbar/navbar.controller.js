@@ -1,7 +1,15 @@
 'use strict';
 
 angular.module('seedlyApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, $cookieStore, User, Auth, socket) {
+    $scope.user = {};
+    if($cookieStore.get('token')) {
+      $scope.user = User.get();
+      $scope.users = [$scope.user];
+      // TODO: figure out this socket thing.
+      socket.syncUpdates('user', $scope.users);
+    }
+
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
