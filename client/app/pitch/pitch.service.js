@@ -9,12 +9,19 @@ angular.module('seedlyApp')
     	update: {
     		method: 'PUT'
     	},
-        findByUser: {
-          method: 'GET',
-          isArray: true,
-          params: {
-            controller: 'findByUser'
-          }
+      findByUser: {
+        method: 'GET',
+        isArray: true,
+        params: {
+          controller: 'findByUser'
         }
+      },
+      findByBubble: {
+        method: 'GET',
+        isArray: true,
+        params: {
+          controller: 'findByBubble'
+        }
+      }
     });
   });

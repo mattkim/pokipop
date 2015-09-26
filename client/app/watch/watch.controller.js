@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('seedlyApp')
-  .controller('WatchCtrl', function ($scope, $stateParams, $cookieStore, User, Pitch, Modal) {
+  .controller('WatchCtrl', function ($scope, $stateParams, $cookieStore, $http, User, Pitch, Modal) {
     var pitchId = $stateParams.id;
     console.log(pitchId);
 
@@ -14,18 +14,24 @@ angular.module('seedlyApp')
 
     $scope.currOffer = {};
 
+    $scope.bubble = {};
+
+    $scope.currEpisode = {};
+
+    $scope.setCurrEpisode = function(episode) {
+        console.log('setCurrEpisode');
+        console.log(episode);
+        $scope.currEpisode = episode;
+    };
+
+    // Find this bubble, and then display it
+
     // TODO: i'm pretty sure this is a super hacky way to do this.
     $scope.setCurrOffer = function(offer) {
         console.log('currOffer');
         console.log(offer);
         $scope.currOffer = offer;
     };
-
-    //$scope.user = {};
-
-    //if($cookieStore.get('token')) {
-    //  $scope.user = User.get();
-    //}
 
     $scope.open = function() {
       $scope.justSubscribed = false;
@@ -64,11 +70,19 @@ angular.module('seedlyApp')
         console.log('got pitch!');
         console.log(res);
         $scope.pitch = res;
+        $scope.currEpisode = $scope.pitch.episodes[0];
 
         User.get({id:$scope.pitch.user}, function(res) {
             console.log('got user!');
             console.log(res);
             $scope.user = res;
+        });
+
+        $http.get('/api/bubbles/findByShow/' + $scope.pitch._id).success(
+          function(bubbles) {
+            console.log('found bubbles.');
+            console.log(bubbles);
+            $scope.bubbles = bubbles;
         });
     });
   });

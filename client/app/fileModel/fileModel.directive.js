@@ -16,7 +16,7 @@ angular.module('seedlyApp')
 
               model.assign(scope, file);
             } else {
-              // TOOD: how to propagate the error
+              // TODO: how to propagate the error
               console.log('img is too large');
             }
           });

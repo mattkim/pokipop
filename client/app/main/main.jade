@@ -6,63 +6,74 @@ div.mainup
       .row#banner-new
         .col-sm-12
           h1 subbly.tv
-          h4 Subscribe to support and watch original shows.
+          h4 Subscribe to bubbles and watch original shows.
           a(href='/discover')
             button.btn.btn-default.btn-lg
-              | Discover Shows
+              | Discover Bubbles
 
 .container.mainbg
-  .row
-    .col-sm-7.pad-right-lrg
+  .row(style='padding:20px; color:#333333')
+    .col-sm-4.center
       h3
-        | Discover Fresh Pitches and Pilots
+        span.glyphicon.glyphicon-search.pad-right-sm
+        | Discover
+      p
+        | Discover upcoming bubbles and shows
+    .col-sm-4.center
+      h3
+        span.glyphicon.glyphicon-heart.pad-right-sm
+        | Subscribe
+      p
+        | Subscribe to bubble production of shows
+    .col-sm-4.center
+      h3
+        span.glyphicon.glyphicon-play.pad-right-sm
+        | Watch
+      p
+        | Watch videos on-site and ad-free
+  hr
+  .row(style='padding-left:50px; padding-right:50px')
+    .col-sm-4
       .row
-        .col-sm-8
-          img.img-rounded.img-fill(src='{{pitch.projectPictureURL}}')
-        .col-sm-4
-          .row
-            .col-sm-12
-              h4
-                a(href='/watch/{{pitch._id}}')
-                  | {{pitch.title}}
-              p
-                | {{pitch.tagline}}
-              h1
-                {{pitch.subscriberCount}}
-                span(ng-show='subscribed', style='font-size:20px')
-                  |  and
-                span(ng-show='subscribed', style='font-size:20px')
-                  |  YOU
-              p
-                | are subbing this
-              p
-                button.btn.btn-default(type='button', ng-click='open()', ng-hide='subscribed')
-                  span.glyphicon.glyphicon-heart.pad-right-sm
-                  | Subscribe!
-          .row
-            .col-sm-8
-              p
-                | created by 
-              p
-                strong
-                  | {{pitch.user.name}}
-            .col-sm-4
-              img.img-circle.img-sm(src='{{pitch.user.profilePictureURL}}')
-
-    .col-sm-5
-      h1
-        | How to be Subbly.
-      ul.list-item
-        li
+        h1
+          | Popular Bubbles
+      .row
+        a(href='/discover')
           p
-            | Watch video pitches and pilots of upcoming projects
-        li
-          p
-            | Subscribe to support its production of more videos
-        li
-          p
-            | Stream videos on-site and ad-free
-      hr
+            | Discover more bubbles
+    .col-sm-8
+      .container(ng-repeat='bubble in bubbles', style='width:100%; border-radius:10px; background-color:white; margin-bottom: 50px; padding-left:0px; border-width:1px;border-style: solid;border-color:#EEEEEE')
+        .row
+          .col-sm-6
+            // TODO: make images fixed in size
+            img.img-fill.img-rounded(src='{{bubble.profilePictureURL}}', style='border-top-right-radius:0px; border-bottom-right-radius:0px;')
+          .col-sm-6
+            .row
+              h3
+                | {{bubble.name}}
+            .row
+              span(style='font-size:20px; font-weight:bold')
+                | {{bubble.subscriberCount}} 
+              span(style='size:11px')
+                | Subscribers
+            .row
+              span(style='font-size:20px; font-weight:bold')
+                | {{bubble.showCount}} 
+              span(style='size:11px')
+                | Shows
+            hr
+            .row
+              p
+                | {{bubble.tagline}}
+            .row
+              p
+                a(href='/bubble/{{bubble._id}}')
+                  button.btn.btn-default.btn-sm
+                    | View Bubble
+  hr
+  .row(style='padding:20px')
+    .col-sm-3
+    .col-sm-6.center
       h1
         | Why be Subbly?
       p

@@ -28,6 +28,12 @@ angular.module('seedlyApp')
       socket.syncUpdates('pitch', $scope.pitches);
     });
 
+        // TODO: limit this to 10 pitches
+    $http.get('/api/bubbles').success(function(bubbles) {
+      $scope.bubbles = bubbles;
+      console.log($scope.bubbles);
+    });
+
     $scope.open = function() {
       Modal.generic.open('app/watch/subscribemodal.html', $scope);
     };

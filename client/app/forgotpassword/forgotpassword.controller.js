@@ -12,6 +12,9 @@ angular.module('seedlyApp')
 
       	User.forgotPassword({
           email:$scope.email
+        }).then(function(){
+          console.log('email sent');
+          $scope.emailSent = true;
         });
       }
     };

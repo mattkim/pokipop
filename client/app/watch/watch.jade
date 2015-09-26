@@ -1,58 +1,53 @@
-div(ng-include='"components/navbar/navbar.html"')
-.container  
-  .row
-    .col-sm-12
-      .row
-        .col-sm-12
-          h1 {{pitch.title}}
-          p {{pitch.tagline}}
-      .row
-        .col-sm-8
-          iframe(width='100%', height='400px', src='{{pitch.episodes[0].youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
-        .col-sm-4
-          h3 {{pitch.episodes[0].title}}
-          p
-            | Episode: {{pitch.episodes[0].index}}
-          p
-            | {{pitch.episodes[0].description}}
-          hr
-          .row
-            h1
-              | {{pitch.subscriberCount}}
-              span(ng-show='subscribed', style='font-size:20px')
-                |  and
-              span(ng-show='subscribed', style='font-size:20px')
-                |  YOU
-            p 
-              | are subbing this
-            a(href='#', ng-click='open()', ng-show='subscribed')
-              p(ng-show='subscribed')
-                | edit subscription
-            // TODO: make this a modal pop up
-            button.btn.btn-default(type='button', ng-click='open()', ng-hide='subscribed')
-              span.glyphicon.glyphicon-heart.pad-right-sm
-              | Subscribe!
-          hr
-          .row
-            .col-sm-8
-              p
-                | created by 
-              p
-                strong
-                  | {{user.name}}
-            .col-sm-4
-              img.img-circle.img-sm(src='{{user.profilePictureURL}}')
-      hr
-      .row
-        .col-sm-12
-          h3 Episodes
-          ul.list-unstyled(ng-repeat='episode in pitch.episodes')
-            li.col-sm-4.margin-bottom-sm(style="height:200px; overflow:hidden")
-              p
-                img.img-rounded.img-sm-h.img-center(src='{{episode.projectPictureURL}}')
-              p
-                | {{episode.index}}. {{episode.title}}
-              p
-                | {{episode.description}}
-        
-      hr
+div.center(style='background-color:black; padding-bottom:30px')
+  div(ng-include='"components/navbar/navbarfront.html"')
+  iframe(width='720', height='400', src='{{currEpisode.youtubelink | trustAsResourceUrl}}', frameborder='0', allowfullscreen)
+div(style='background-color:#f7fafa')
+  .container(style='padding:20px')
+    .row
+      .col-sm-8
+        .row
+          .col-sm-12
+            h1 {{pitch.title}}
+            p {{pitch.tagline}}
+        hr
+        .row
+          .col-sm-3
+            img.img-fill.img-circle.img-fill(src='{{currEpisode.projectPictureURL}}')
+          .col-sm-9  
+            h3
+              | {{currEpisode.title}}
+            p
+              | Episode: {{currEpisode.index}}
+            p
+              | {{currEpisode.description}}
+      .col-sm-4
+        img.img-circle.img-sm(src='{{bubbles[0].profilePictureURL}}')
+        a(href='/bubble/{{bubbles[0]._id}}')
+          h3
+            | {{bubbles[0].name}}
+        h3
+          | {{pitch.subscriberCount}}
+          span(ng-show='subscribed', style='font-size:20px')
+            |  and
+          span(ng-show='subscribed', style='font-size:20px')
+            |  YOU
+        p 
+          | are subbing this bubble
+        a(href='#', ng-click='open()', ng-show='subscribed')
+          p(ng-show='subscribed')
+            | edit subscription
+        // TODO: make this a modal pop up
+        button.btn.btn-default(type='button', ng-click='open()', ng-hide='subscribed')
+          span.glyphicon.glyphicon-heart.pad-right-sm
+          | Subscribe!
+  hr
+  div.center(style='padding:20px')
+    div(ng-repeat='episode in pitch.episodes', style='display:inline-block; width:250px;margin-right:20px;margin-left:20px; border-radius:10px; border-width:1px;border-style: solid;border-color:#EEEEEE; background-color:white')
+      img.img-fill.img-rounded.img-lrg(src='{{episode.projectPictureURL}}', style='border-bottom-left-radius:0px; border-bottom-right-radius:0px;')
+      a(href='#', ng-click='setCurrEpisode(episode)')
+        p
+          | {{episode.index}}. {{episode.title}}
+      p
+        | {{episode.description}}
+
+div(ng-include='"components/footer/footerfront.html"')

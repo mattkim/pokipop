@@ -12,6 +12,15 @@ exports.findByUser = function(req, res) {
   });
 };
 
+exports.findByBubble = function(req, res) {
+  console.log(req.params);
+  var id = req.params.id2;
+  // TODO: note this returns a collection
+  Pitch.findByBubble(id, function(err, pitches) {
+    res.status(200).json(pitches);
+  });
+};
+
 // Get list of pitchs
 exports.index = function(req, res) {
   Pitch.find(function (err, pitchs) {

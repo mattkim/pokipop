@@ -62,21 +62,15 @@ var all = {
   },
 
   facebook: {
-    clientID:     process.env.FACEBOOK_ID || 'id',
-    clientSecret: process.env.FACEBOOK_SECRET || 'secret',
+    clientID:     process.env.FACEBOOK_ID || '862754760440358',
+    clientSecret: process.env.FACEBOOK_SECRET || '2c0b804003e4b05436717b06890c6605',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/facebook/callback'
   },
 
   twitter: {
-    clientID:     process.env.TWITTER_ID || 'id',
-    clientSecret: process.env.TWITTER_SECRET || 'secret',
+    clientID:     process.env.TWITTER_ID || 'oiO6XBG4bD28laXl2lVTiMlwZ',
+    clientSecret: process.env.TWITTER_SECRET || 'fdCP1IxR7pyzTBGFFohbMOGHXZox8nJF4rnK5eTnaBfh27msWC',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
-  },
-
-  google: {
-    clientID:     process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
   }
 };
 

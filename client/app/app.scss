@@ -82,6 +82,10 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
    //height: 200px;
 }
 
+.img-fill-height {
+   height: 100%;
+}
+
 .pad-right-lrg {
   padding-right: 50px;
 }
@@ -139,12 +143,17 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
   color: red
 }
 
+.btn-circle {
+  border-radius: 50%;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'about/about.scss';
 @import 'account/login/login.scss';
 @import 'account/settings/settings.scss';
 @import 'admin/admin.scss';
+@import 'bubble/bubble.scss';
 @import 'changepassword/changepassword.scss';
 @import 'contact/contact.scss';
 @import 'discover/discover.scss';

@@ -1,0 +1,27 @@
+div(style='background-color:#00CC99; padding-bottom:30px;')
+  div(ng-include='"components/navbar/navbarfront.html"')
+  .container(style='color:white')
+    .row
+      .col-sm-12.center
+        img.img-circle.img-lrg(src='{{bubble.profilePictureURL}}')
+        h1
+          | {{bubble.name}}
+        p
+          | {{bubble.tagline}}
+        p
+          | {{bubble.subscriberCount}} subscribers
+        button.btn.btn-default.btn-lrg
+          span.glyphicon.glyphicon-heart.pad-right-sm
+          | Subscribe!
+div.center(style='padding:50px; background-color:#f7fafa')
+  div(ng-repeat='show in shows', style='width:300px;margin-right:20px;margin-left:20px;display:inline-block; border-radius:10px; border-width:1px;border-style: solid;border-color:#EEEEEE; background-color:white')
+    a(href='/watch/{{show._id}}')
+      img.img-fill.img-rounded.img-lrg(src='{{show.projectPictureURL}}', style='border-bottom-left-radius:0px; border-bottom-right-radius:0px;')
+      span(style='padding:10px; font-size:20px')
+        | {{show.title}}
+    p(style='font-weight:bold')
+      | 1,000 views
+    p(style='padding:10px')
+      | {{show.tagline}}
+
+div(ng-include='"components/footer/footerfront.html"')

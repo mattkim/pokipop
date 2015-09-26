@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./pitch.controller');
+var controller = require('./bubble.controller');
 
 var router = express.Router();
 
@@ -11,7 +11,6 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
-router.get('/findByUser/:id2', controller.findByUser);
-router.get('/findByBubble/:id2', controller.findByBubble);
+router.get('/findByShow/:id2', controller.findByShow);
 
 module.exports = router;

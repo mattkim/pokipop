@@ -69,11 +69,9 @@ angular.module('seedlyApp')
         var file = $scope.profilePictureFile;
       
         if(file) {
-          console.log('file');
           promise = upload(file);
           promise.then(updateUser());
         } else {
-          console.log('no file');
           updateUser();
         }
       }
@@ -83,11 +81,9 @@ angular.module('seedlyApp')
       $scope.submitted = true;
       $scope.passwordErrors = [];
       $scope.passwordSuccess = {};
-      // TODO: this state doesn't work prolly bc of the form.valid thing.
 
       Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
       .then( function() {
-        console.log('good');
         $scope.passwordSuccess.message = 'Password successfully changed.';
       })
       .catch( function(err) {
